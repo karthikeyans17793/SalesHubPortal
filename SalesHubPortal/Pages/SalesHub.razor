@@ -35,6 +35,11 @@
     }
 </div>
 
+
+
+
+
+
 @code {
     private List<Section> Sections { get; set; } = new();
     private Section? SelectedSection;
@@ -95,6 +100,15 @@
 
     private void SelectSection(Section section)
     {
+      
         SelectedSection = section;
     }
+
+    private async Task ReadClipboard()
+    {
+        var text = await jSRuntime.InvokeAsync<string>("clipboardHelper.readText");
+        Console.WriteLine(text);
+    }
+
+
 }
