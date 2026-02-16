@@ -1,0 +1,100 @@
+﻿@page "/sales-hub"
+@using SalesHubPortal.Models
+@inject IJSRuntime jSRuntime
+
+<div class="saleshub-container">
+
+    <header class="saleshub-header">
+        <div class="logo">arn</div>
+        <h1>SALES HUB</h1>
+    </header>
+
+    <div class="tiles">
+        @foreach (var section in Sections)
+        {
+            <div class="tile @(SelectedSection == section ? "selected" : "")"
+                 @onclick="@(() => SelectSection(section))">
+                @(section.Name)
+            </div>
+        }
+    </div>
+
+    @if (SelectedSection != null)
+    {
+        <div class="link-section">
+            <h3>@SelectedSection.Name</h3>
+            <ul>
+                @foreach (var link in SelectedSection.Links)
+                {
+                    <li>
+                        <a href="@link.Url" target="_blank">@link.Url</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+
+@code {
+    private List<Section> Sections { get; set; } = new();
+    private Section? SelectedSection;
+
+    protected override void OnInitialized()
+    {
+        Sections = new()
+        {
+            new Section
+            {
+                Name = "Avails",
+                Links = new()
+                {
+                    new() { Url = "https://www.abc.net.au/news" },
+                    new() { Url = "https://www.bom.gov.au" },
+                    new() { Url = "https://www.nsw.gov.au" },
+                    new() { Url = "https://www.australia.com" },
+                    new() { Url = "https://learn.microsoft.com" }
+                }
+            },
+            new Section
+            {
+                Name = "Rate Cards",
+                Links = new()
+                {
+                    new() { Url = "https://stripe.com/pricing" },
+                    new() { Url = "https://aws.amazon.com/pricing" },
+                    new() { Url = "https://azure.microsoft.com/pricing" },
+                    new() { Url = "https://cloud.google.com/pricing" }
+                }
+            },
+            new Section
+            {
+                Name = "Tools",
+                Links = new()
+                {
+                    new() { Url = "https://github.com" },
+                    new() { Url = "https://www.postman.com" },
+                    new() { Url = "https://www.figma.com" },
+                    new() { Url = "https://code.visualstudio.com" }
+                }
+            },
+            new Section
+            {
+                Name = "Process & Guidelines",
+                Links = new()
+                {
+                    new() { Url = "https://learn.microsoft.com/aspnet/core/blazor" },
+                    new() { Url = "https://learn.microsoft.com/dotnet" },
+                    new() { Url = "https://12factor.net" },
+                    new() { Url = "https://martinfowler.com" }
+                }
+            }
+        };
+
+        SelectedSection = Sections.FirstOrDefault(); // Avails selected by default
+    }
+
+    private void SelectSection(Section section)
+    {
+        SelectedSection = section;
+    }
+}

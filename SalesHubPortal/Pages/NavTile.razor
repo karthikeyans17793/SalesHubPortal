@@ -1,0 +1,10 @@
+﻿<div class="tile @(IsSelected ? "selected" : "")"
+     @onclick="() => OnClick.InvokeAsync(Title)">
+    @Title
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public bool IsSelected { get; set; }
+    [Parameter] public EventCallback<string> OnClick { get; set; }
+}
